@@ -50,7 +50,7 @@ export default function AdminDashboard({ user, setUser }) {
 
   async function fetchStats() {
     try {
-      const res = await fetch("http://localhost:4002/api/admin/stats", {
+      const res = await fetch("https://admin-dashboard-pmr8.onrender.com/api/admin/stats", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -62,7 +62,7 @@ export default function AdminDashboard({ user, setUser }) {
 
   async function fetchUsers() {
     try {
-      const res = await fetch(`http://localhost:4002/api/admin/users?q=${encodeURIComponent(filter)}&sort=${userSort.field}&order=${userSort.order}`, {
+      const res = await fetch(`https://admin-dashboard-pmr8.onrender.com/api/admin/users?q=${encodeURIComponent(filter)}&sort=${userSort.field}&order=${userSort.order}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -75,7 +75,7 @@ export default function AdminDashboard({ user, setUser }) {
 
   async function fetchStores() {
     try {
-      const res = await fetch(`http://localhost:4002/api/admin/stores?q=${encodeURIComponent(filter)}&sort=${storeSort.field}&order=${storeSort.order}`, {
+      const res = await fetch(`https://admin-dashboard-pmr8.onrender.com/api/admin/stores?q=${encodeURIComponent(filter)}&sort=${storeSort.field}&order=${storeSort.order}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await res.json();
@@ -112,8 +112,8 @@ export default function AdminDashboard({ user, setUser }) {
     try {
       const method = editingUserId ? "PUT" : "POST";
       const url = editingUserId
-        ? `http://localhost:4002/api/admin/users/${editingUserId}`
-        : "http://localhost:4002/api/admin/users";
+        ? `https://admin-dashboard-pmr8.onrender.com/api/admin/users/${editingUserId}`
+        : "https://admin-dashboard-pmr8.onrender.com/api/admin/users";
 
       const res = await fetch(url, {
         method,
@@ -151,7 +151,7 @@ export default function AdminDashboard({ user, setUser }) {
   async function handleDeleteUser(id) {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     try {
-      const res = await fetch(`http://localhost:4002/api/admin/users/${id}`, {
+      const res = await fetch(`https://admin-dashboard-pmr8.onrender.com/api/admin/users/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`
@@ -179,8 +179,8 @@ export default function AdminDashboard({ user, setUser }) {
     try {
       const method = editingStoreId ? "PUT" : "POST";
       const url = editingStoreId
-        ? `http://localhost:4002/api/admin/stores/${editingStoreId}`
-        : "http://localhost:4002/api/admin/stores";
+        ? `https://admin-dashboard-pmr8.onrender.com/api/admin/stores/${editingStoreId}`
+        : "https://admin-dashboard-pmr8.onrender.com/api/admin/stores";
 
       const res = await fetch(url, {
         method,
@@ -215,7 +215,7 @@ export default function AdminDashboard({ user, setUser }) {
   async function handleDeleteStore(id) {
     if (!window.confirm("Are you sure you want to delete this store?")) return;
     try {
-      const res = await fetch(`http://localhost:4002/api/admin/stores/${id}`, {
+      const res = await fetch(`https://admin-dashboard-pmr8.onrender.com/api/admin/stores/${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` },
       });

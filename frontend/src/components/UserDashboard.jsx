@@ -34,7 +34,7 @@ export default function UserDashboard({ user, setUser }) {
         const token = localStorage.getItem("token");
 
         const storeRes = await fetch(
-          `http://localhost:4002/api/stores?q=${search}&sort=${sortField}&order=${sortOrder}`,
+          `https://admin-dashboard-pmr8.onrender.com/api/stores?q=${search}&sort=${sortField}&order=${sortOrder}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         const storeData = await storeRes.json();
@@ -81,7 +81,7 @@ export default function UserDashboard({ user, setUser }) {
     try {
       const token = localStorage.getItem("token");
 
-      const res = await fetch("http://localhost:4002/api/ratings", {
+      const res = await fetch("https://admin-dashboard-pmr8.onrender.com/api/ratings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -128,7 +128,7 @@ export default function UserDashboard({ user, setUser }) {
       setLoading(true);
 
       const res = await fetch(
-        "http://localhost:4002/api/auth/user/update-password",
+        "https://admin-dashboard-pmr8.onrender.com/api/auth/user/update-password",
         {
           method: "PUT",
           headers: {

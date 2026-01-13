@@ -52,7 +52,7 @@ export default function OwnerDashboard({ setUser }) {
   async function fetchOwnerStores(sortBy = "value", order = "DESC") {
     try {
       const storeRes = await fetch(
-        "http://localhost:4002/api/stores/my-stores",
+        "https://admin-dashboard-pmr8.onrender.com/api/stores/my-stores",
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const storesData = await storeRes.json();
@@ -62,7 +62,7 @@ export default function OwnerDashboard({ setUser }) {
       const storesWithRatings = await Promise.all(
         storesData.map(async (store) => {
           const res = await fetch(
-            `http://localhost:4002/api/ratings/store/${store.id}/raters?sort=${sortBy}&order=${order}`,
+            `https://admin-dashboard-pmr8.onrender.com/api/ratings/store/${store.id}/raters?sort=${sortBy}&order=${order}`,
             { headers: { Authorization: `Bearer ${token}` } }
           );
           const raters = await res.json();
@@ -95,7 +95,7 @@ export default function OwnerDashboard({ setUser }) {
     const [sortBy, order] = value.split("_");
     try {
       const res = await fetch(
-        `http://localhost:4002/api/ratings/store/${storeId}/raters?sort=${sortBy}&order=${order}`,
+        `https://admin-dashboard-pmr8.onrender.com/api/ratings/store/${storeId}/raters?sort=${sortBy}&order=${order}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const raters = await res.json();
@@ -118,7 +118,7 @@ export default function OwnerDashboard({ setUser }) {
     try {
       setLoading(true);
       const res = await fetch(
-        "http://localhost:4002/api/owner/update-password",
+        "https://admin-dashboard-pmr8.onrender.com/api/owner/update-password",
         {
           method: "PUT",
           headers: {

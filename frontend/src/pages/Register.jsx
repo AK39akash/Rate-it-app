@@ -17,7 +17,7 @@ function Register({ setUser }) {
         const {name, email, address, password, role} = form;
 
         try {
-            const response = await fetch("http://localhost:4002/api/auth/register", {
+            const response = await fetch("https://admin-dashboard-pmr8.onrender.com/api/auth/register", {
                 method: 'POST',
                 headers: {
                     "Content-Type": 'application/json',
