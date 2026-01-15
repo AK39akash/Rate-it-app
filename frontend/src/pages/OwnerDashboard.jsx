@@ -19,7 +19,7 @@ export default function OwnerDashboard({ view }) {
 
   async function fetchOwnerStores() {
     try {
-      const res = await fetch("http://localhost:4002/api/stores/my-stores", {
+      const res = await fetch("https://rate-it-app.onrender.com/api/stores/my-stores", {
          headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -34,7 +34,7 @@ export default function OwnerDashboard({ view }) {
 
   async function fetchStoreRatings(store, sortBy, order) {
       try {
-          const rRes = await fetch(`http://localhost:4002/api/ratings/store/${store.id}/raters?sort=${sortBy}&order=${order}`, {
+          const rRes = await fetch(`https://rate-it-app.onrender.com/api/ratings/store/${store.id}/raters?sort=${sortBy}&order=${order}`, {
              headers: { Authorization: `Bearer ${token}` }
           });
           const raters = await rRes.json();
@@ -58,7 +58,7 @@ export default function OwnerDashboard({ view }) {
   const handlePasswordUpdate = async (e) => {
       e.preventDefault();
       try {
-          const res = await fetch("http://localhost:4002/api/owner/update-password", {
+          const res = await fetch("https://rate-it-app.onrender.com/api/owner/update-password", {
               method: "PUT",
               headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
               body: JSON.stringify({ password: newPassword })

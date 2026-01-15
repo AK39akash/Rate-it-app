@@ -26,13 +26,13 @@ export default function UserDashboard({ view }) {
 
   async function fetchData() {
     try {
-        const sRes = await fetch(`http://localhost:4002/api/stores?q=${search}&sort=${sortField}&order=${sortOrder}`, {
+        const sRes = await fetch(`https://rate-it-app.onrender.com/api/stores?q=${search}&sort=${sortField}&order=${sortOrder}`, {
             headers: { Authorization: `Bearer ${token}` }
         });
         const sData = await sRes.json();
         setStores(sData.stores || []);
 
-        const rRes = await fetch(`http://localhost:4002/api/ratings`, {
+        const rRes = await fetch(`https://rate-it-app.onrender.com/api/ratings`, {
             headers: { Authorization: `Bearer ${token}` }
         });
         const rData = await rRes.json();
@@ -59,7 +59,7 @@ export default function UserDashboard({ view }) {
 
   const handleRate = async (storeId, val) => {
       try {
-          const res = await fetch("http://localhost:4002/api/ratings", {
+          const res = await fetch("https://rate-it-app.onrender.com/api/ratings", {
               method: "POST",
               headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
               body: JSON.stringify({ storeId, value: val })
@@ -73,7 +73,7 @@ export default function UserDashboard({ view }) {
       if(!newPassword) return;
       setLoading(true);
       try {
-          const res = await fetch("http://localhost:4002/api/auth/user/update-password", {
+          const res = await fetch("https://rate-it-app.onrender.com/api/auth/user/update-password", {
               method: "PUT",
               headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
               body: JSON.stringify({ password: newPassword })

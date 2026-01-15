@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance with base configuration
 const api = axios.create({
-  baseURL: 'http://localhost:4002/api', // Adjust if your backend port differs
+  baseURL: 'https://rate-it-app.onrender.com/api', // Adjust if your backend port differs
   headers: {
     'Content-Type': 'application/json',
   },

@@ -23,7 +23,7 @@ function Login({ setUser }) {
 
         try {
             // Using direct fetch as per original code, to be refactored to API utility later if needed
-            const response = await fetch("http://localhost:4002/api/auth/login", {
+            const response = await fetch("https://rate-it-app.onrender.com/api/auth/login", {
                 method: 'POST',
                 headers: { "Content-Type": 'application/json' },
                 body: JSON.stringify({ email: form.email, password: form.password }),
