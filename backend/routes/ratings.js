@@ -64,11 +64,25 @@ router.get("/store/:storeId/raters", authenticate, authorize("OWNER"), async (re
       return res.status(403).json({ error: "Forbidden" });
     
 
-    // fetch raters: join users & ratings
-    const rows = await Rating.sequelize.query(
-      `SELECT r.id, r.value, u.id as userId, u.name, u.email FROM Ratings r JOIN Users u ON r.userId = u.id WHERE r.storeId = :storeId ORDER BY ${sortBy} ${sortOrder}`,
-      { replacements: { storeId }, type: Rating.sequelize.QueryTypes.SELECT }
-    );
+    // fetch raters using Sequelize model (safer/easier for associations)
+    let orderClause = [['value', sortOrder]];
+    if (sortBy === 'name' || sortBy === 'email') {
+        orderClause = [[User, sortBy, sortOrder]];
+    }
+
+    const ratings = await Rating.findAll({
+        where: { storeId },
+        include: [{ model: User, attributes: ['id', 'name', 'email'] }],
+        order: orderClause
+    });
+
+    const rows = ratings.map(r => ({
+        id: r.id,
+        value: r.value,
+        userId: r.User ? r.User.id : null,
+        name: r.User ? r.User.name : "Unknown",
+        email: r.User ? r.User.email : "Unknown"
+    }));
 
     res.json(rows);
   } catch (err) { 

@@ -40,7 +40,7 @@ export default function UserDashboard({ user, setUser }) {
         const storeData = await storeRes.json();
         setStores(storeData.stores || []);
 
-        const ratingRes = await fetch("http://localhost:4002/api/ratings", {
+        const ratingRes = await fetch("https://admin-dashboard-pmr8.onrender.com/api/ratings", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const ratingData = await ratingRes.json();

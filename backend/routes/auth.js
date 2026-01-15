@@ -22,20 +22,27 @@ router.post("/register", registrationValidators, async (req, res) => {
 });
 
 // Login (all roles)
-router.post("/login", async (req, res) => {
+router.post("/login", async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email } });
     if (!user) return res.status(401).json({ error: "Invalid credentials" });
+
     const ok = await bcrypt.compare(password, user.passwordHash);
     if (!ok) return res.status(401).json({ error: "Invalid credentials" });
-    const token = jwt.sign({ id: user.id, role: user.role, email: user.email }, process.env.JWT_SECRET, { expiresIn: "8h" });
-    return res.json({ token, user: { id: user.id, name: user.name, email: user.email, role: user.role } });
-  } catch (err) { console.error(err); res.status(500).json({ error: "Server error" }); } 
-});
 
-console.log("authenticate:", authMiddleware.authenticate);
-console.log("authorize:", authMiddleware.authorize("USER"));
+    const token = jwt.sign(
+      { id: user.id, role: user.role, email: user.email }, 
+      process.env.JWT_SECRET, 
+      { expiresIn: "8h" }
+    );
+    
+    return res.json({ 
+        token, 
+        user: { id: user.id, name: user.name, email: user.email, role: user.role } 
+    });
+  } catch (err) { next(err); } 
+});
 
 router.put(
   "/user/update-password",

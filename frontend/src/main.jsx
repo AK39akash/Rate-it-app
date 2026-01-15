@@ -1,26 +1,16 @@
 import { StrictMode, useState } from "react";
 import { createRoot } from "react-dom/client";
-import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { RouterProvider } from "react-router-dom";
-import createAppRouter from "./routers/router.jsx";
-
-function getStoredUser() {
-  try {
-    const stored = localStorage.getItem("user");
-    return stored ? JSON.parse(stored): null;
-  } catch (error) {
-    console.error("Invaid user data in localstorage: ", error);
-    return null;
-  }
-}
+import "./index.css";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
 
 function RootApp() {
-  const [user, setUser] = useState(getStoredUser());
-
-  const router = createAppRouter(user, setUser);
-
-  return <RouterProvider router={router} />;
+  return (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
 }
 
 createRoot(document.getElementById("root")).render(
