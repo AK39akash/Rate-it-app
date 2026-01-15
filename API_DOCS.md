@@ -1,111 +1,138 @@
 # API Documentation – Store Rating System
 
-Base URL:
-http://localhost:4002/api
+**Base URL:** `https://rate-it-app.onrender.com/api`
 
 ---
 
-## Authentication
+## 🔐 Authentication
 
 ### Register
-POST /auth/register
 
-Body:
+**POST** `/auth/register`
+
+```json
 {
   "name": "John Doe",
   "email": "john@example.com",
   "password": "password123",
-  "address": "Delhi"
+  "address": "New York"
 }
-
----
+```
 
 ### Login
-POST /auth/login
 
-Body:
+**POST** `/auth/login`
+
+```json
 {
   "email": "john@example.com",
   "password": "password123"
 }
+```
 
-Response:
+**Response:**
+
+```json
 {
   "token": "JWT_TOKEN",
-  "user": {
-    "id": 1,
-    "name": "John Doe",
-    "role": "USER"
-  }
+  "user": { "id": 1, "name": "John Doe", "role": "USER" }
 }
+```
+
+### Get Current User
+
+**GET** `/auth/me`
+_Headers: `Authorization: Bearer TOKEN`_
+
+### Update Password (User)
+
+**PUT** `/auth/user/update-password`
+_Headers: `Authorization: Bearer TOKEN`_
+
+```json
+{ "password": "newpassword123" }
+```
 
 ---
 
-## User
-
-### Get Profile
-GET /auth/profile  
-Authorization: Bearer TOKEN
-
----
-
-### Update Password
-PUT /auth/user/update-password  
-Authorization: Bearer TOKEN
-
-Body:
-{
-  "password": "newpassword123"
-}
-
----
-
-## Stores
+## 🛍️ Stores (Public)
 
 ### Get All Stores
-GET /stores?q=&sort=name&order=ASC  
-Authorization: Bearer TOKEN
+
+**GET** `/stores`
+
+- **Query Params:**
+  - `q`: Search term (name or address)
+  - `sort`: `name`, `rating`
+  - `order`: `ASC`, `DESC`
+  - `page`: Page number (default 1)
+  - `limit`: Items per page (default 20)
+
+### Get Store Details
+
+**GET** `/stores/:id`
+_Returns store details, average rating, and current user's rating (if logged in)._
 
 ---
 
-### Get Owner Stores
-GET /stores/my-stores  
-Authorization: Bearer TOKEN
-
----
-
-## Ratings
+## ⭐ Ratings
 
 ### Create / Update Rating
-POST /ratings  
-Authorization: Bearer TOKEN
 
-Body:
+**POST** `/ratings`
+_Headers: `Authorization: Bearer TOKEN`_
+
+```json
 {
   "storeId": 5,
   "value": 4
 }
+```
 
 ---
 
-### Get Store Raters (Owner)
-GET /ratings/store/:storeId/raters  
-Authorization: Bearer TOKEN
+## 🏪 Store Owner
 
-Query Params:
-- sort = value | name | email
-- order = ASC | DESC
+### Get My Stores
+
+**GET** `/stores/my-stores`
+_Headers: `Authorization: Bearer TOKEN`_
+
+### Get Store Raters
+
+**GET** `/ratings/store/:storeId/raters`
+_Headers: `Authorization: Bearer TOKEN` (Owner only)_
+
+- **Query Params:** `sort` (value, name, email), `order` (ASC, DESC)
+
+### Update Password (Owner)
+
+**PUT** `/owner/update-password`
+_Headers: `Authorization: Bearer TOKEN`_
+
+```json
+{ "password": "newpassword123" }
+```
 
 ---
 
-## Admin
+## 🛡️ Admin
 
-### Create User
-POST /admin/users  
-Authorization: Bearer TOKEN
+### Get Stats
 
----
+**GET** `/admin/stats`
+_Headers: `Authorization: Bearer TOKEN` (Admin only)_
 
-### Create Store
-POST /admin/stores  
-Authorization: Bearer TOKEN
+### Manage Users
+
+- **GET** `/admin/users`: List all users
+- **POST** `/admin/users`: Create user
+- **PUT** `/admin/users/:id`: Update user
+- **DELETE** `/admin/users/:id`: Delete user
+
+### Manage Stores
+
+- **GET** `/admin/stores`: List all stores
+- **POST** `/admin/stores`: Create store
+- **PUT** `/admin/stores/:id`: Update store
+- **DELETE** `/admin/stores/:id`: Delete store
