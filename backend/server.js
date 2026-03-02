@@ -53,3 +53,7 @@ sequelize.authenticate()
   .catch((err) => {
     console.log("Database connection failed", err);
   })
+
+sequelize.sync({ alter: true })
+  .then(() => console.log("Tables created successfully"))
+  .catch(err => console.error(err));
