@@ -46,7 +46,7 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-Sequelize.authRoutes()
+Sequelize.authenticate()
   .then(() => {
     console.log("Database connected successfully");
   })
