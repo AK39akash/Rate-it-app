@@ -14,6 +14,7 @@ const adminRoutes = require("./routes/admin.js");
 const storesRoutes = require("./routes/stores.js");
 const ratingsRoutes = require("./routes/ratings.js");
 const ownerRoutes = require("./routes/owner.js");
+const { Sequelize } = require("sequelize");
 
 const app = express();
 
@@ -41,18 +42,14 @@ app.use((err, req, res, next) => {
 // Database Sync & Server Start
 const PORT = process.env.PORT || 4002;
 
-(async () => {
-  try {
-    await sequelize.authenticate();
-    console.log("Database connected successfully.");
-    // await sequelize.sync({ force: false }); // Use { force: true } only for resetting DB
-    await sequelize.sync();
-    console.log("Database synced.");
-    
-    app.listen(PORT, () => {
-      console.log(`Server is running on http://localhost:${PORT}`);
-    });
-  } catch (err) {
-    console.error("Failed to start server:", err);
-  }
-})();
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+Sequelize.authRoutes()
+  .then(() => {
+    console.log("Database connected successfully");
+  })
+  .catch((err) => {
+    console.log("Database connection failed", err);
+  })
