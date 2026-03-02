@@ -6,7 +6,12 @@ const Rating = require("./models/Rating.js");
 
 (async () => {
   try {
+    await sequelize.authenticate();
+    console.log("Database connected");
+
     await sequelize.sync({ force: true });
+    console.log("Tables synced");
+    
     const adminPass = await bcrypt.hash("Admin@123!", 10);
     const ownerPass = await bcrypt.hash("Owner@123!", 10);
     const userPass = await bcrypt.hash("User@123!", 10);
